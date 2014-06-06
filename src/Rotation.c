@@ -31,3 +31,28 @@ Node *rightRotate(Node *elem){
   
   return newParent;
 }
+
+Node *doubleRightRotate(Node *elem){
+  Node *tempPivot, *tempPivotRight, *temp, *newParent;
+  
+  tempPivot = elem->leftChild;
+  tempPivotRight = tempPivot->rightChild;
+  
+  tempPivotRight->leftChild = tempPivot;
+  elem->leftChild = tempPivotRight;
+  
+  if(tempPivotRight->rightChild != NULL){
+    temp = tempPivotRight->rightChild;
+    newParent = tempPivotRight;
+    newParent->rightChild = elem;
+    elem->leftChild = temp;
+  }
+  else if(tempPivotRight->leftChild != NULL){
+    temp = tempPivotRight->leftChild;
+    newParent = tempPivotRight;
+    newParent->rightChild = elem;
+    tempPivot->rightChild = temp;
+  }
+  
+  return newParent;
+}
