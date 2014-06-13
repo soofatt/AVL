@@ -1,5 +1,6 @@
 #include "AVL.h"
 #include "Rotation.h"
+#include "Rotation_r.h"
 #include <stdio.h>
 
 Node *leftRotate(Node *elem){
@@ -26,6 +27,10 @@ Node *leftRotate(Node *elem){
   else if(elem->balance == 2 && newParent->balance == 2){
     elem->balance = -1;
     newParent->balance = 0;
+  }
+  else if(elem->balance == 1 && newParent->balance == 0){
+    elem->balance = 0;
+    newParent->balance = -1;
   }
   else{
   } 
@@ -58,6 +63,10 @@ Node *rightRotate(Node *elem){
     elem->balance = 1;
     newParent->balance = 0;
   }
+  else if(elem->balance == -1 && newParent->balance == 0){
+    elem->balance = 0;
+    newParent->balance = 1;
+  }
   else{
   } 
   
@@ -86,4 +95,22 @@ Node *doubleLeftRotate(Node *elem){
   newParent = leftRotate(elem);
   
   return newParent;
+}
+
+int getHeight(Node *elem){
+  int left = 0, right = 0, currentHeight = 0;
+  
+  if(elem->leftChild == NULL && elem->rightChild == NULL)
+    return 1;
+  if(elem->leftChild != NULL)
+    left = _getHeight(elem->leftChild);
+  if(elem->rightChild != NULL)
+    right = _getHeight(elem->rightChild);
+  
+  if(left >= right)
+    currentHeight = left+1;
+  else
+    currentHeight = right+1;
+  
+  return currentHeight;
 }
