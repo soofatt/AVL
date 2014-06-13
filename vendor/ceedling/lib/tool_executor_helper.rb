@@ -82,7 +82,7 @@ class ToolExecutorHelper
     return nil
   end
 
-  # if command succeeded and we have verbosity cranked up, spill our guts
+  # if command succeeded and we have verbosity cbalanceed up, spill our guts
   def print_happy_results(command_str, shell_result, boom=true)
     if ((shell_result[:exit_code] == 0) or ((shell_result[:exit_code] != 0) and not boom))
       output  = "> Shell executed command:\n"

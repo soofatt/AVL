@@ -2,7 +2,7 @@
 #define AVL_H
 
 typedef struct Node{
-	int rank;
+	int balance;
 	struct Node *leftChild;
 	struct Node *rightChild;
 	int data;
