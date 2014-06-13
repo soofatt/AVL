@@ -8,4 +8,8 @@ typedef struct Node{
 	int data;
 } Node;
 
+Node *avlAdd(Node *root, Node *nodeToAdd);
+Node *avlRemove(Node *root, Node *nodeToRemove);
+Node *avlRemoveRootNode(Node *root);
+
 #endif // AVL_H
