@@ -2,6 +2,6 @@
 #include "Rotation_r.h"
 #include <stdio.h>
 
-int getHeight(Node *elem){
-  
+int _getHeight(Node *elem){
+  return getHeight(elem);
 }

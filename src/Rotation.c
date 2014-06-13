@@ -24,7 +24,7 @@ Node *rightRotate(Node *elem){
   temp = newParent->rightChild;
   
   newParent->rightChild = elem;
-  elem->rightChild = temp;
+  elem->leftChild = temp;
   
   elem->rank = 0;
   newParent->rank = 0;

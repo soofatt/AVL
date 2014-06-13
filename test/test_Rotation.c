@@ -53,6 +53,7 @@ void test_leftRotate_given_6_elements_should_rotate_to_balance_tree(){
   TEST_ASSERT_EQUAL_PTR(&node3, root);
   TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
   TEST_ASSERT_EQUAL_PTR(&node5, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node4, node1.rightChild);
   
   TEST_ASSERT_EQUAL(0, node1.rank);
   TEST_ASSERT_EQUAL(0, node2.rank);
@@ -111,6 +112,7 @@ void test_rightRotate_given_6_elements_should_rotate_to_balance_tree(){
   TEST_ASSERT_EQUAL_PTR(&node2, root);
   TEST_ASSERT_EQUAL_PTR(&node4, root->leftChild);
   TEST_ASSERT_EQUAL_PTR(&node1, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node5, node1.leftChild);
   
   TEST_ASSERT_EQUAL(0, node1.rank);
   TEST_ASSERT_EQUAL(0, node2.rank);
@@ -144,6 +146,7 @@ void test_doubleRightRotate_given_6_elements_should_rotate_to_balance_tree_case1
   TEST_ASSERT_EQUAL_PTR(&node5, root);
   TEST_ASSERT_EQUAL_PTR(&node2, root->leftChild);
   TEST_ASSERT_EQUAL_PTR(&node1, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node6, node1.leftChild);
   
   // TEST_ASSERT_EQUAL(0, node1.rank);
   // TEST_ASSERT_EQUAL(-1, node2.rank);
@@ -177,6 +180,7 @@ void test_doubleRightRotate_given_6_elements_should_rotate_to_balance_tree_case2
   TEST_ASSERT_EQUAL_PTR(&node5, root);
   TEST_ASSERT_EQUAL_PTR(&node2, root->leftChild);
   TEST_ASSERT_EQUAL_PTR(&node1, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node6, node2.rightChild);
   
   // TEST_ASSERT_EQUAL(0, node1.rank);
   // TEST_ASSERT_EQUAL(0, node2.rank);
@@ -215,6 +219,8 @@ void test_doubleRightRotate_given_9_elements_should_rotate_to_balance_tree_case1
   TEST_ASSERT_EQUAL_PTR(&node5, root);
   TEST_ASSERT_EQUAL_PTR(&node2, root->leftChild);
   TEST_ASSERT_EQUAL_PTR(&node1, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node8, node2.rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node9, node1.leftChild);
   
   // TEST_ASSERT_EQUAL(0, node1.rank);
   // TEST_ASSERT_EQUAL(0, node2.rank);
@@ -253,6 +259,8 @@ void test_doubleRightRotate_given_9_elements_should_rotate_to_balance_tree_case2
   TEST_ASSERT_EQUAL_PTR(&node5, root);
   TEST_ASSERT_EQUAL_PTR(&node2, root->leftChild);
   TEST_ASSERT_EQUAL_PTR(&node1, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node8, node2.rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node9, node1.leftChild);
   
   // TEST_ASSERT_EQUAL(0, node1.rank);
   // TEST_ASSERT_EQUAL(0, node2.rank);
@@ -262,3 +270,70 @@ void test_doubleRightRotate_given_9_elements_should_rotate_to_balance_tree_case2
   // TEST_ASSERT_EQUAL(0, node6.rank);
 }
 
+/**
+ *        (50)                     (80)
+ *        /  \                     /  \
+ *     (10)  (100)               (50) (100)
+ *            / \           =>   /  \    \
+ *         (80) (110)          (10) (70) (110)
+ *          /
+ *       (70)
+ *
+ */
+void test_doubleLeftRotate_given_6_elements_should_rotate_to_balance_tree_case1(){
+	Node node6 = {.data = 70, .rank=0, .leftChild = NULL, .rightChild = NULL};
+	Node node5 = {.data = 110, .rank=0, .leftChild = NULL, .rightChild = NULL};
+	Node node4 = {.data = 80, .rank=-1, .leftChild = &node6, .rightChild = NULL};
+	Node node3 = {.data = 100, .rank=-1, .leftChild = &node4, .rightChild = &node5};
+	Node node2 = {.data = 10, .rank=0, .leftChild = NULL, .rightChild = NULL};
+	Node node1 = {.data = 50, .rank=2, .leftChild = &node2, .rightChild = &node3};
+  Node *root;
+  
+  root = doubleLeftRotate(&node1);
+  
+  TEST_ASSERT_EQUAL_PTR(&node4, root);
+  TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node6, node1.rightChild);
+  
+  // TEST_ASSERT_EQUAL(0, node1.rank);
+  // TEST_ASSERT_EQUAL(-1, node2.rank);
+  // TEST_ASSERT_EQUAL(0, node3.rank);
+  // TEST_ASSERT_EQUAL(0, node4.rank);
+  // TEST_ASSERT_EQUAL(0, node5.rank);
+  // TEST_ASSERT_EQUAL(0, node6.rank);
+}
+
+/**
+ *        (50)                     (80)
+ *        /  \                     /  \
+ *     (10)  (100)               (50) (100)
+ *            / \           =>   /    /   \
+ *         (80) (110)          (10) (90) (110)
+ *            \
+ *           (90)
+ *
+ */
+void test_doubleLeftRotate_given_6_elements_should_rotate_to_balance_tree_case2(){
+	Node node6 = {.data = 90, .rank=0, .leftChild = NULL, .rightChild = NULL};
+	Node node5 = {.data = 110, .rank=0, .leftChild = NULL, .rightChild = NULL};
+	Node node4 = {.data = 80, .rank=-1, .leftChild = NULL, .rightChild = &node6};
+	Node node3 = {.data = 100, .rank=-1, .leftChild = &node4, .rightChild = &node5};
+	Node node2 = {.data = 10, .rank=0, .leftChild = NULL, .rightChild = NULL};
+	Node node1 = {.data = 50, .rank=2, .leftChild = &node2, .rightChild = &node3};
+  Node *root;
+  
+  root = doubleLeftRotate(&node1);
+  
+  TEST_ASSERT_EQUAL_PTR(&node4, root);
+  TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node6, node3.leftChild);
+  
+  // TEST_ASSERT_EQUAL(0, node1.rank);
+  // TEST_ASSERT_EQUAL(-1, node2.rank);
+  // TEST_ASSERT_EQUAL(0, node3.rank);
+  // TEST_ASSERT_EQUAL(0, node4.rank);
+  // TEST_ASSERT_EQUAL(0, node5.rank);
+  // TEST_ASSERT_EQUAL(0, node6.rank);
+}
