@@ -345,3 +345,91 @@ void test_doubleLeftRotate_given_6_elements_should_rotate_to_balance_tree_case2(
   // TEST_ASSERT_EQUAL(0, node5.balance);
   // TEST_ASSERT_EQUAL(0, node6.balance);
 }
+
+/**
+ *        (50)                       (70)
+ *        /  \                    /        \
+ *     (10)  (100)             (50)        (100)
+ *     /     /   \     =>      /  \        /   \
+ *   (5)  (70)   (150)       (10)  (60)  (80)  (150)
+ *        /  \      \        /       \           \
+ *     (60) (80)   (200)   (5)       (65)        (200)
+ *        \  
+ *        (65)
+ */
+void test_doubleLeftRotate_given_10_elements_should_rotate_to_balance_tree_case1(){
+	Node node10 = {.data = 65, .balance=0, .leftChild = NULL, .rightChild = NULL};
+	Node node9 = {.data = 200, .balance=0, .leftChild = NULL, .rightChild = NULL};
+	Node node8 = {.data = 80, .balance=0, .leftChild = NULL, .rightChild = NULL};
+	Node node7 = {.data = 60, .balance=1, .leftChild = NULL, .rightChild = &node10};
+	Node node6 = {.data = 150, .balance=1, .leftChild = NULL, .rightChild = &node9};
+	Node node5 = {.data = 70, .balance=-1, .leftChild = &node7, .rightChild = &node8};
+	Node node4 = {.data = 5, .balance=0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 100, .balance=-1, .leftChild = &node5, .rightChild = &node6};
+	Node node2 = {.data = 10, .balance=-1, .leftChild = &node4, .rightChild = NULL};
+	Node node1 = {.data = 50, .balance=2, .leftChild = &node2, .rightChild = &node3};
+  Node *root;
+  
+  root = doubleLeftRotate(&node1);
+  
+  TEST_ASSERT_EQUAL_PTR(&node5, root);
+  TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node7, node1.rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node8, node3.leftChild);
+  
+  TEST_ASSERT_EQUAL(0, node1.balance);
+  TEST_ASSERT_EQUAL(-1, node2.balance);
+  TEST_ASSERT_EQUAL(1, node3.balance);
+  TEST_ASSERT_EQUAL(0, node4.balance);
+  TEST_ASSERT_EQUAL(0, node5.balance);
+  TEST_ASSERT_EQUAL(1, node6.balance);
+  TEST_ASSERT_EQUAL(1, node7.balance);
+  TEST_ASSERT_EQUAL(0, node8.balance);
+  TEST_ASSERT_EQUAL(0, node9.balance);
+  TEST_ASSERT_EQUAL(0, node10.balance);
+}
+
+/**
+ *        (50)                       (70)
+ *        /  \                    /        \
+ *     (10)  (100)             (50)        (100)
+ *     /     /   \     =>      /  \        /   \
+ *   (5)  (70)   (150)       (10)  (60)  (80)  (150)
+ *        /  \      \        /           /        \
+ *     (60) (80)   (200)   (5)        (75)        (200)
+ *          /
+ *       (75)
+ */
+void test_doubleLeftRotate_given_10_elements_should_rotate_to_balance_tree_case2(){
+	Node node10 = {.data = 75, .balance=0, .leftChild = NULL, .rightChild = NULL};
+	Node node9 = {.data = 200, .balance=0, .leftChild = NULL, .rightChild = NULL};
+	Node node8 = {.data = 80, .balance=-1, .leftChild = &node10, .rightChild = NULL};
+	Node node7 = {.data = 60, .balance=0, .leftChild = NULL, .rightChild = NULL};
+	Node node6 = {.data = 150, .balance=1, .leftChild = NULL, .rightChild = &node9};
+	Node node5 = {.data = 70, .balance=1, .leftChild = &node7, .rightChild = &node8};
+	Node node4 = {.data = 5, .balance=0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 100, .balance=-1, .leftChild = &node5, .rightChild = &node6};
+	Node node2 = {.data = 10, .balance=-1, .leftChild = &node4, .rightChild = NULL};
+	Node node1 = {.data = 50, .balance=2, .leftChild = &node2, .rightChild = &node3};
+  Node *root;
+  
+  root = doubleLeftRotate(&node1);
+  
+  TEST_ASSERT_EQUAL_PTR(&node5, root);
+  TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node7, node1.rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node8, node3.leftChild);
+  
+  TEST_ASSERT_EQUAL(-1, node1.balance);
+  TEST_ASSERT_EQUAL(-1, node2.balance);
+  TEST_ASSERT_EQUAL(0, node3.balance);
+  TEST_ASSERT_EQUAL(0, node4.balance);
+  TEST_ASSERT_EQUAL(0, node5.balance);
+  TEST_ASSERT_EQUAL(1, node6.balance);
+  TEST_ASSERT_EQUAL(0, node7.balance);
+  TEST_ASSERT_EQUAL(-1, node8.balance);
+  TEST_ASSERT_EQUAL(0, node9.balance);
+  TEST_ASSERT_EQUAL(0, node10.balance);
+}
