@@ -4,15 +4,18 @@
 #include <stdio.h>
 
 Node *avlAdd(Node *root, Node *nodeToAdd){
+  int tempBalanceLeft, tempBalanceRight;
   
   if(root == NULL)
     root = nodeToAdd;
   else if(nodeToAdd->data < root->data){
     if(root->leftChild != NULL){
+	  tempBalanceLeft = (root->leftChild->balance);
       avlAdd(root->leftChild, nodeToAdd);
-      if((root->leftChild->balance) - 0 != 0)
+      if(tempBalanceLeft - (root->leftChild->balance) == 0){}
+      else if((root->leftChild->balance) - 0 != 0)
         root->balance--;
-      else{}
+	  else{}
     }
     else{
       root->leftChild = nodeToAdd;
@@ -21,8 +24,10 @@ Node *avlAdd(Node *root, Node *nodeToAdd){
   }
   else if(nodeToAdd->data > root->data){
     if(root->rightChild != NULL){
+	  tempBalanceRight = (root->rightChild->balance);
       avlAdd(root->rightChild, nodeToAdd);
-      if((root->rightChild->balance) - 0 != 0)
+      if(tempBalanceRight - (root->rightChild->balance) == 0){}
+	  else if((root->rightChild->balance) - 0 != 0)
         root->balance++;
       else{}
     }
