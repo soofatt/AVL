@@ -398,16 +398,18 @@ void test_avlRemove_should_remove_75(){
   Node node1 = {.data = 50, .balance = -1, .leftChild = &node2, .rightChild = &node3};
   Node nodeRemove = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
   Node *root = &node1;
+  Node *result;
   
-  root = avlRemove(root, &nodeRemove);
+  result = avlRemove(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
   TEST_ASSERT_EQUAL(0, node4.balance);
   
+  TEST_ASSERT_EQUAL_PTR(&node3, result);
   TEST_ASSERT_EQUAL_PTR(&node2, root);
-  TEST_ASSERT_EQUAL_PTR(&node1, node2.rightChild);
-  TEST_ASSERT_EQUAL_PTR(&node4, node2.leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node4, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node1, root->rightChild);
 }
 
 /**
@@ -426,15 +428,275 @@ void test_avlRemove_should_remove_100(){
   Node node1 = {.data = 50, .balance = -1, .leftChild = &node2, .rightChild = &node3};
   Node nodeRemove = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
   Node *root = &node1;
+  Node *result;
   
-  root = avlRemove(root, &nodeRemove);
+  result = avlRemove(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(1, node2.balance);
   TEST_ASSERT_EQUAL(0, node4.balance);
   TEST_ASSERT_EQUAL(0, node5.balance);
   
+  TEST_ASSERT_EQUAL_PTR(&node3, result);
   TEST_ASSERT_EQUAL_PTR(&node2, root);
-  TEST_ASSERT_EQUAL_PTR(&node1, node2.rightChild);
-  TEST_ASSERT_EQUAL_PTR(&node4, node2.leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node4, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node1, root->rightChild);
+}
+
+/**
+ *     (50)               (50)
+ *     /  \       =>      /  \
+ *   (25)(120)          (25)(150)
+ *   /  \    \          /  \
+ * (10) (35) (150)    (10) (35)
+ *
+ */
+void test_avlRemove_should_remove_120(){
+	Node node6 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node5 = {.data = 35, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node4 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 120, .balance = 1, .leftChild = NULL, .rightChild = &node6};
+	Node node2 = {.data = 25, .balance = 0, .leftChild = &node4, .rightChild = &node5};
+  Node node1 = {.data = 50, .balance = 0, .leftChild = &node2, .rightChild = &node3};
+  Node nodeRemove = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = &node1;
+  Node *result;
+  
+  result = avlRemove(&root, &nodeRemove);
+  
+  TEST_ASSERT_EQUAL(-1, node1.balance);
+  TEST_ASSERT_EQUAL(0, node2.balance);
+  TEST_ASSERT_EQUAL(0, node4.balance);
+  TEST_ASSERT_EQUAL(0, node5.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node3, result);
+  TEST_ASSERT_EQUAL_PTR(&node1, root);
+  TEST_ASSERT_EQUAL_PTR(&node2, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node6, root->rightChild);
+}
+
+/**
+ *        (50)                      (50)
+ *     /         \       =>      /         \
+ *   (25)       (110)          (25)       (75)
+ *   /  \       /   \          /  \       /   \
+ * (10) (35)  (75) (150)    (10) (35)   (65) (150)
+ *             /    / \                      /   \
+ *          (65)(120)(175)                 (120) (175)
+ *
+ *
+ */
+// void test_avlRemove_should_remove_110(){
+	// Node node10 = {.data = 175, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	// Node node9 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	// Node node8 = {.data = 65, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	// Node node7 = {.data = 150, .balance = 0, .leftChild = &node9, .rightChild = &node10};
+	// Node node6 = {.data = 75, .balance =-1, .leftChild = &node8, .rightChild = NULL};
+	// Node node5 = {.data = 35, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	// Node node4 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	// Node node3 = {.data = 110, .balance = 0, .leftChild = &node6, .rightChild = &node7};
+	// Node node2 = {.data = 25, .balance = 0, .leftChild = &node4, .rightChild = &node5};
+  // Node node1 = {.data = 50, .balance = 1, .leftChild = &node2, .rightChild = &node3};
+  // Node nodeRemove = {.data = 110, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  // Node *root = &node1;
+  
+  // root = avlRemove(root, &nodeRemove);
+  
+  // TEST_ASSERT_EQUAL(1, node1.balance);
+  // TEST_ASSERT_EQUAL(0, node2.balance);
+  // TEST_ASSERT_EQUAL(1, node6.balance);
+  // TEST_ASSERT_EQUAL(0, node7.balance);
+  
+  // TEST_ASSERT_EQUAL_PTR(&node1, root);
+  // TEST_ASSERT_EQUAL_PTR(&node6, node1.rightChild);
+  // TEST_ASSERT_EQUAL_PTR(&node2, node1.leftChild);
+// }
+
+/**
+ *
+ *    (20)
+ *
+ *
+ */
+void test_avlGetReplacer_should_get_20(){
+  Node node1 = {.data = 20, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = &node1;
+  Node *result;
+  
+  result = avlGetReplacer(&root);
+  
+  TEST_ASSERT_EQUAL_PTR(&node1, result);
+
+}
+
+/**
+ *     (30)
+ *     /
+ *   (10)
+ *
+ */
+void test_avlGetReplacer_should_get_30(){
+  Node node2 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 30, .balance = -1, .leftChild = &node2, .rightChild = NULL};
+  Node *root = &node1;
+  Node *result;
+  
+  result = avlGetReplacer(&root);
+  
+  TEST_ASSERT_EQUAL(0, node2.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node1, result);
+
+}
+
+/**
+ *     (10)
+ *        \
+ *        (50)
+ *
+ */
+void test_avlGetReplacer_should_get_50(){
+  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 10, .balance = 1, .leftChild = NULL, .rightChild = &node2};
+  Node *root = &node1;
+  Node *result;
+  
+  result = avlGetReplacer(&root);
+  
+  TEST_ASSERT_EQUAL(0, node2.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node2, result);
+
+}
+
+/**
+ *     (10)
+ *     /  \
+ *   (5) (60)
+ *
+ */
+void test_avlGetReplacer_should_get_60(){
+  Node node3 = {.data = 60, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node2 = {.data = 5, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 10, .balance = 0, .leftChild = &node2, .rightChild = &node3};
+  Node *root = &node1;
+  Node *result;
+  
+  result = avlGetReplacer(&root);
+  
+  TEST_ASSERT_EQUAL(-1, node1.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node3, result);
+  TEST_ASSERT_EQUAL_PTR(NULL, node1.rightChild);
+
+}
+
+/**
+ *     (10)
+ *     /  \
+ *   (5) (55)
+ *        /
+ *      (25)
+ */
+void test_avlGetReplacer_should_get_55(){
+  Node node4 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node3 = {.data = 55, .balance = -1, .leftChild = &node4, .rightChild = NULL};
+  Node node2 = {.data = 5, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 10, .balance = 1, .leftChild = &node2, .rightChild = &node3};
+  Node *root = &node1;
+  Node *result;
+  
+  result = avlGetReplacer(&root);
+  
+  TEST_ASSERT_EQUAL(0, node1.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node3, result);
+  TEST_ASSERT_EQUAL_PTR(&node4, node1.rightChild);
+
+}
+
+/**
+ *     (10)
+ *     /  \
+ *   (5)  (55)
+ *   /    /  \
+ * (1)  (25) (75)
+ *           /
+ *         (65)
+ */
+void test_avlGetReplacer_should_get_75(){
+  Node node7 = {.data = 65, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node6 = {.data = 75, .balance = -1, .leftChild = &node7, .rightChild = NULL};
+  Node node5 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node4 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node3 = {.data = 55, .balance = 1, .leftChild = &node5, .rightChild = &node6};
+  Node node2 = {.data = 5, .balance = -1, .leftChild = &node4, .rightChild = NULL};
+  Node node1 = {.data = 10, .balance = 1, .leftChild = &node2, .rightChild = &node3};
+  Node *root = &node1;
+  Node *result;
+  
+  result = avlGetReplacer(&root);
+  
+  TEST_ASSERT_EQUAL(0, node3.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node6, result);
+  TEST_ASSERT_EQUAL_PTR(&node7, node3.rightChild);
+
+}
+
+/**
+ *     (10)
+ *     /  \
+ *   (5)  (100)
+ *   /
+ * (1)
+ *
+ */
+void test_avlGetReplacer_should_get_100(){
+  Node node4 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node2 = {.data = 5, .balance = -1, .leftChild = &node4, .rightChild = NULL};
+  Node node1 = {.data = 10, .balance = -1, .leftChild = &node2, .rightChild = &node3};
+  Node *root = &node1;
+  Node *result;
+  
+  result = avlGetReplacer(&root);
+  
+  TEST_ASSERT_EQUAL(-2, node1.balance);
+  TEST_ASSERT_EQUAL(-1, node2.balance);
+  TEST_ASSERT_EQUAL(0, node4.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node3, result);
+
+}
+
+/**
+ *      (50)      
+ *     /    \                   
+ *   (10)   (100)    
+ *   /  \     \    
+ * (1)  (25)  (150)
+ *      /  \           
+ *    (20) (30)          
+ *
+ */
+void test_avlGetReplacer_should_get_150(){
+  Node node8 = {.data = 30, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node7 = {.data = 20, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node6 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node5 = {.data = 25, .balance = 0, .leftChild = &node7, .rightChild = &node8};
+  Node node4 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node3 = {.data = 100, .balance = 1, .leftChild = NULL, .rightChild = &node6};
+  Node node2 = {.data = 10, .balance = 1, .leftChild = &node4, .rightChild = NULL};
+  Node node1 = {.data = 50, .balance = -1, .leftChild = &node2, .rightChild = &node3};
+  Node *root = &node1;
+  Node *result;
+  
+  result = avlGetReplacer(&root);
+  
+  TEST_ASSERT_EQUAL(-2, node1.balance);
+  TEST_ASSERT_EQUAL(0, node3.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node6, result);
+
 }

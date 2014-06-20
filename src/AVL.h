@@ -9,7 +9,7 @@ typedef struct Node{
 } Node;
 
 Node *avlAdd(Node *root, Node *nodeToAdd);
-Node *avlRemove(Node *root, Node *nodeToRemove);
+Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove);
 Node *avlRemoveRootNode(Node *root);
-
+Node *avlGetReplacer(Node **ptrToRoot);
 #endif // AVL_H

@@ -50,36 +50,57 @@ Node *avlAdd(Node *root, Node *nodeToAdd){
   return root;
 }
 
-Node *avlRemove(Node *root, Node *nodeToRemove){
+Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove){
+  Node *tempNode = NULL;
   
-  if(nodeToRemove->data == root->data)
-    return;
+  // if(nodeToRemove->data == (*ptrToRoot)->data)
+    // return;
   
-  if(nodeToRemove->data < root->data){
-    avlRemove(root->leftChild, nodeToRemove);
-    root->leftChild = (root->leftChild->leftChild);
-    root->balance++;
+  if(nodeToRemove->data < (*ptrToRoot)->data){
+    tempNode = (*ptrToRoot)->leftChild;
+    // avlRemove((*ptrToRoot)->leftChild, nodeToRemove);
+    (*ptrToRoot)->leftChild = ((*ptrToRoot)->leftChild->leftChild);
+    (*ptrToRoot)->balance++;
   }
     
-  if(nodeToRemove->data > root->data){
-    avlRemove(root->rightChild, nodeToRemove);
-    root->rightChild = (root->rightChild->rightChild);
-    root->balance--;
-  }  
+  if(nodeToRemove->data > (*ptrToRoot)->data){
+    tempNode = (*ptrToRoot)->rightChild;
+    // avlRemove((*ptrToRoot)->rightChild, nodeToRemove);
+    (*ptrToRoot)->rightChild = ((*ptrToRoot)->rightChild->rightChild);
+    (*ptrToRoot)->balance--;
+  }   
   
-  if(root->balance == 2 && root->rightChild->balance == 1)
-   root = leftRotate(root);
-  else if(root->balance == 2 && root->rightChild->balance == 0)
-   root = leftRotate(root);
-  else if(root->balance == 2 && root->rightChild->balance == -1)
-   root = doubleLeftRotate(root);
-  else if(root->balance == -2 && root->leftChild->balance == 1)
-   root = doubleRightRotate(root);
-  else if(root->balance == -2 && root->leftChild->balance == -1)
-   root = rightRotate(root);
-   else if(root->balance == -2 && root->leftChild->balance == 0)
-   root = rightRotate(root);
+  if((*ptrToRoot)->balance == 2 && (*ptrToRoot)->rightChild->balance == 1)
+   (*ptrToRoot) = leftRotate((*ptrToRoot));
+  else if((*ptrToRoot)->balance == 2 && (*ptrToRoot)->rightChild->balance == 0)
+   (*ptrToRoot) = leftRotate((*ptrToRoot));
+  else if((*ptrToRoot)->balance == 2 && (*ptrToRoot)->rightChild->balance == -1)
+   (*ptrToRoot) = doubleLeftRotate((*ptrToRoot));
+  else if((*ptrToRoot)->balance == -2 && (*ptrToRoot)->leftChild->balance == 1)
+   (*ptrToRoot) = doubleRightRotate((*ptrToRoot));
+  else if((*ptrToRoot)->balance == -2 && (*ptrToRoot)->leftChild->balance == -1)
+   (*ptrToRoot) = rightRotate((*ptrToRoot));
+  else if((*ptrToRoot)->balance == -2 && (*ptrToRoot)->leftChild->balance == 0)
+   (*ptrToRoot) = rightRotate((*ptrToRoot));
   else{}
   
-  return root;
+  return tempNode;
+}
+
+Node *avlGetReplacer(Node **ptrToRoot){
+  Node *replacement;
+  
+  if((*ptrToRoot)->rightChild == NULL){
+    replacement = (*ptrToRoot);
+    if((*ptrToRoot)->leftChild != NULL)
+      (*ptrToRoot) = (*ptrToRoot)->leftChild;
+    else
+      (*ptrToRoot) = NULL;
+  }
+  else{
+    replacement = avlGetReplacer(&(*ptrToRoot)->rightChild);
+    (*ptrToRoot)->balance--;
+  }
+  
+  return replacement;
 }
