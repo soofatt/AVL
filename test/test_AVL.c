@@ -382,3 +382,59 @@ void test_avlAdd_should_add_1_50_100_75_150_200_120_110_130_250_105(){
   TEST_ASSERT_EQUAL_PTR(&node8, node3.rightChild);
   
 }
+
+/**
+ *     (50)               (25)
+ *     /  \       =>      /  \
+ *   (25)(75)           (10)(50)
+ *   /
+ * (10)
+ *
+ */
+void test_avlRemove_should_remove_75(){
+	Node node4 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 25, .balance = -1, .leftChild = &node4, .rightChild = NULL};
+  Node node1 = {.data = 50, .balance = -1, .leftChild = &node2, .rightChild = &node3};
+  Node nodeRemove = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = &node1;
+  
+  root = avlRemove(root, &nodeRemove);
+  
+  TEST_ASSERT_EQUAL(0, node1.balance);
+  TEST_ASSERT_EQUAL(0, node2.balance);
+  TEST_ASSERT_EQUAL(0, node4.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node2, root);
+  TEST_ASSERT_EQUAL_PTR(&node1, node2.rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node4, node2.leftChild);
+}
+
+/**
+ *     (50)               (25)
+ *     /  \       =>      /  \
+ *   (25)(100)          (10)(50)
+ *   /  \                    /
+ * (10) (35)               (35)
+ *
+ */
+void test_avlRemove_should_remove_100(){
+	Node node5 = {.data = 35, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node4 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 25, .balance = 0, .leftChild = &node4, .rightChild = &node5};
+  Node node1 = {.data = 50, .balance = -1, .leftChild = &node2, .rightChild = &node3};
+  Node nodeRemove = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = &node1;
+  
+  root = avlRemove(root, &nodeRemove);
+  
+  TEST_ASSERT_EQUAL(-1, node1.balance);
+  TEST_ASSERT_EQUAL(1, node2.balance);
+  TEST_ASSERT_EQUAL(0, node4.balance);
+  TEST_ASSERT_EQUAL(0, node5.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node2, root);
+  TEST_ASSERT_EQUAL_PTR(&node1, node2.rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node4, node2.leftChild);
+}

@@ -49,3 +49,37 @@ Node *avlAdd(Node *root, Node *nodeToAdd){
   
   return root;
 }
+
+Node *avlRemove(Node *root, Node *nodeToRemove){
+  
+  if(nodeToRemove->data == root->data)
+    return;
+  
+  if(nodeToRemove->data < root->data){
+    avlRemove(root->leftChild, nodeToRemove);
+    root->leftChild = (root->leftChild->leftChild);
+    root->balance++;
+  }
+    
+  if(nodeToRemove->data > root->data){
+    avlRemove(root->rightChild, nodeToRemove);
+    root->rightChild = (root->rightChild->rightChild);
+    root->balance--;
+  }  
+  
+  if(root->balance == 2 && root->rightChild->balance == 1)
+   root = leftRotate(root);
+  else if(root->balance == 2 && root->rightChild->balance == 0)
+   root = leftRotate(root);
+  else if(root->balance == 2 && root->rightChild->balance == -1)
+   root = doubleLeftRotate(root);
+  else if(root->balance == -2 && root->leftChild->balance == 1)
+   root = doubleRightRotate(root);
+  else if(root->balance == -2 && root->leftChild->balance == -1)
+   root = rightRotate(root);
+   else if(root->balance == -2 && root->leftChild->balance == 0)
+   root = rightRotate(root);
+  else{}
+  
+  return root;
+}

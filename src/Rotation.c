@@ -32,6 +32,10 @@ Node *leftRotate(Node *elem){
     elem->balance = 0;
     newParent->balance = -1;
   }
+  else if(elem->balance == 2 && newParent->balance == 0){
+    elem->balance = 1;
+    newParent->balance = -1;
+  }
   else{
   } 
   
@@ -65,6 +69,10 @@ Node *rightRotate(Node *elem){
   }
   else if(elem->balance == -1 && newParent->balance == 0){
     elem->balance = 0;
+    newParent->balance = 1;
+  }
+  else if(elem->balance == -2 && newParent->balance == 0){
+    elem->balance = -1;
     newParent->balance = 1;
   }
   else{
