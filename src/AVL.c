@@ -27,7 +27,7 @@ Node *avlAdd(Node *root, Node *nodeToAdd){
 	  tempBalanceRight = (root->rightChild->balance);
       avlAdd(root->rightChild, nodeToAdd);
       if(tempBalanceRight - (root->rightChild->balance) == 0){}
-	  else if((root->rightChild->balance) - 0 != 0)
+      else if((root->rightChild->balance) - 0 != 0)
         root->balance++;
       else{}
     }
@@ -89,17 +89,39 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove){
 
 Node *avlGetReplacer(Node **ptrToRoot){
   Node *replacement;
+  int tempBalance;
   
   if((*ptrToRoot)->rightChild == NULL){
     replacement = (*ptrToRoot);
-    if((*ptrToRoot)->leftChild != NULL)
-      (*ptrToRoot) = (*ptrToRoot)->leftChild;
-    else
-      (*ptrToRoot) = NULL;
+    (*ptrToRoot) = (*ptrToRoot)->leftChild;
   }
   else{
+    tempBalance = (*ptrToRoot)->rightChild->balance;
     replacement = avlGetReplacer(&(*ptrToRoot)->rightChild);
-    (*ptrToRoot)->balance--;
+    if((*ptrToRoot)->rightChild == NULL)
+      (*ptrToRoot)->balance--;
+    else if((*ptrToRoot)->rightChild->balance == 0){
+      if(tempBalance - (*ptrToRoot)->rightChild->balance != 0)
+        (*ptrToRoot)->balance--;
+      else {}
+    }
+    else{}
+  }
+  
+  if((*ptrToRoot) != NULL){
+    if((*ptrToRoot)->balance == 2 && (*ptrToRoot)->rightChild->balance == 1)
+     (*ptrToRoot) = leftRotate((*ptrToRoot));
+    else if((*ptrToRoot)->balance == 2 && (*ptrToRoot)->rightChild->balance == 0)
+     (*ptrToRoot) = leftRotate((*ptrToRoot));
+    else if((*ptrToRoot)->balance == 2 && (*ptrToRoot)->rightChild->balance == -1)
+     (*ptrToRoot) = doubleLeftRotate((*ptrToRoot));
+    else if((*ptrToRoot)->balance == -2 && (*ptrToRoot)->leftChild->balance == 1)
+     (*ptrToRoot) = doubleRightRotate((*ptrToRoot));
+    else if((*ptrToRoot)->balance == -2 && (*ptrToRoot)->leftChild->balance == -1)
+     (*ptrToRoot) = rightRotate((*ptrToRoot));
+    else if((*ptrToRoot)->balance == -2 && (*ptrToRoot)->leftChild->balance == 0)
+     (*ptrToRoot) = rightRotate((*ptrToRoot));
+    else{}
   }
   
   return replacement;
