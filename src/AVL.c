@@ -53,37 +53,65 @@ Node *avlAdd(Node *root, Node *nodeToAdd){
 Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove){
   Node *returnNode = NULL;
   Node *tempNode;
-  int tempBalanceLeft;
+  int tempBalanceLeft, tempBalanceLeft2;
   
   if((*ptrToRoot) !=NULL){
     if(nodeToRemove->data == (*ptrToRoot)->data){
       returnNode = (*ptrToRoot);
       tempNode = returnNode;
-      if((*ptrToRoot)->leftChild == NULL)
+      
+      if((*ptrToRoot)->leftChild == NULL){
         (*ptrToRoot) = (*ptrToRoot)->rightChild;
+        
+        if((*ptrToRoot) != NULL){
+          (*ptrToRoot)->leftChild = tempNode->leftChild;
+          (*ptrToRoot)->rightChild = tempNode->rightChild;
+          (*ptrToRoot)->balance = tempNode->balance;
+          (*ptrToRoot)->balance--;
+        }
+      }
+      
       else{
+        tempBalanceLeft2 = (*ptrToRoot)->leftChild->balance;
         (*ptrToRoot) = avlGetReplacer(&(*ptrToRoot)->leftChild);
-        (*ptrToRoot)->rightChild = tempNode->rightChild;
+        
+        if((*ptrToRoot) != NULL){
+          (*ptrToRoot)->leftChild = tempNode->leftChild;
+          (*ptrToRoot)->rightChild = tempNode->rightChild;
+          (*ptrToRoot)->balance = tempNode->balance;
+          if((*ptrToRoot)->leftChild == NULL)
+            (*ptrToRoot)->balance++;
+          
+          else if((*ptrToRoot)->leftChild->balance == 0){
+            if(tempBalanceLeft2 - (*ptrToRoot)->leftChild->balance != 0)
+              (*ptrToRoot)->balance++;
+            else{}
+          }
+          
+          else{}
+        }
       }
     }  
     
     else if(nodeToRemove->data < (*ptrToRoot)->data){
       if((*ptrToRoot)->leftChild != NULL)
         tempBalanceLeft = (*ptrToRoot)->leftChild->balance;
+        
       returnNode = avlRemove(&(*ptrToRoot)->leftChild, nodeToRemove);
+      
       if((*ptrToRoot)->leftChild == NULL)
         (*ptrToRoot)->balance++;
+        
       else if((*ptrToRoot)->leftChild->balance == 0){
         if(tempBalanceLeft - (*ptrToRoot)->leftChild->balance != 0)
           (*ptrToRoot)->balance++;
         else {}
       }
+      
       else{}
     }
   }  
     
-  
-  
     
   // if(nodeToRemove->data > (*ptrToRoot)->data){
     // avlRemove((*ptrToRoot)->rightChild, nodeToRemove);
