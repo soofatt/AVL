@@ -3,6 +3,15 @@
 #include "Rotation_r.h"
 #include <stdio.h>
 
+/**
+ *Description : To add a node into the AVL tree
+ *
+ *Inputs : *root -> The pointer to root of the current tree
+ *         *nodeToAdd -> The node to be added into the tree
+ *
+ *Output : root -> The new root of the tree
+ *
+ */
 Node *avlAdd(Node *root, Node *nodeToAdd){
   int tempBalanceLeft, tempBalanceRight;
   
@@ -43,17 +52,30 @@ Node *avlAdd(Node *root, Node *nodeToAdd){
 
   if(root->balance == 2 && root->rightChild->balance == 1)
    root = leftRotate(root);
+  else if(root->balance == 2 && root->rightChild->balance == 0)
+   root = leftRotate(root);
   else if(root->balance == 2 && root->rightChild->balance == -1)
    root = doubleLeftRotate(root);
   else if(root->balance == -2 && root->leftChild->balance == 1)
    root = doubleRightRotate(root);
   else if(root->balance == -2 && root->leftChild->balance == -1)
    root = rightRotate(root);
+  else if(root->balance == -2 && root->leftChild->balance == 0)
+   root = rightRotate(root);
   else{}
   
   return root;
 }
 
+/**
+ *Description : To remove a node from the AVL tree
+ *
+ *Inputs : **ptrToRoot -> The pointer to pointer to the root of the current tree
+ *         *nodeToRemove -> The node to be removed from the tree
+ *
+ *Output : returnNode -> The node that is removed
+ *
+ */
 Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove){
   Node *returnNode = NULL;
   Node *tempNode;
@@ -159,6 +181,14 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove){
   return returnNode;
 }
 
+/**
+ *Description : To get the replacement node for avlRemove
+ *
+ *Inputs : **ptrToRoot -> The pointer to pointer to the root of the current tree
+ *
+ *Output : replacement -> The node that will replace the removed node in avlRemove
+ *
+ */
 Node *avlGetReplacer(Node **ptrToRoot){
   Node *replacement;
   int tempBalance;
