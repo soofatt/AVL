@@ -33,28 +33,6 @@ void test_avlAdd_given_160_should_change_node1_balance_factor(){
 
 /**
  *   (100)                  (100)
- *                 =>        /
- *                        (80)
- *
- *
- *
- */
-void test_avlAdd_given_80_should_change_node1_balance_factor(){
-	Node node2 = {.data = 80, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
-  
-  root = avlAdd(root, &node1);
-  root = avlAdd(root, &node2);
-  
-  TEST_ASSERT_EQUAL(-1, node1.balance);
-  TEST_ASSERT_EQUAL(0, node2.balance);
-  
-  TEST_ASSERT_EQUAL_PTR(&node2, node1.leftChild);
-}
-
-/**
- *   (100)                  (100)
  *   /   \                  /   \
  * (50)  (150)       =>  (50)  (150)
  *       /                     /   \
@@ -384,6 +362,349 @@ void test_avlAdd_should_add_1_50_100_75_150_200_120_110_130_250_105(){
   TEST_ASSERT_EQUAL_PTR(&node9, node5.leftChild);
   TEST_ASSERT_EQUAL_PTR(&node8, node3.rightChild);
   
+}
+
+/**
+ *   (100)                  (100)
+ *                 =>        /
+ *                        (80)
+ *
+ *
+ *
+ */
+void test_avlAdd_given_80_should_change_node1_balance_factor(){
+	Node node2 = {.data = 80, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = NULL;
+  
+  root = avlAdd(root, &node1);
+  root = avlAdd(root, &node2);
+  
+  TEST_ASSERT_EQUAL(-1, node1.balance);
+  TEST_ASSERT_EQUAL(0, node2.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node2, node1.leftChild);
+}
+
+/**
+ *    (100)                  (100)
+ *    /   \        =>        /   \
+ *  (50) (150)            (50)   (150)
+ *  /                     /  \
+ *(25)                  (25) (75)
+ *
+ */
+void test_avlAdd_given_75_should_not_change_node1_balance_factor(){
+	Node node5 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node4 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = NULL;
+  
+  root = avlAdd(root, &node1);
+  root = avlAdd(root, &node2);
+  root = avlAdd(root, &node3);
+  root = avlAdd(root, &node4);
+  root = avlAdd(root, &node5);
+  
+  TEST_ASSERT_EQUAL(-1, node1.balance);
+  TEST_ASSERT_EQUAL(0, node2.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node1, root);
+  TEST_ASSERT_EQUAL_PTR(&node2, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
+}
+
+/**
+ *    (100)                  (100)
+ *    /   \        =>        /   \
+ *  (50) (150)            (50)   (150)
+ *     \                  /  \
+ *     (75)             (25) (75)
+ *
+ */
+void test_avlAdd_given_25_should_not_change_node1_balance_factor(){
+	Node node5 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = NULL;
+  
+  root = avlAdd(root, &node1);
+  root = avlAdd(root, &node2);
+  root = avlAdd(root, &node3);
+  root = avlAdd(root, &node4);
+  root = avlAdd(root, &node5);
+  
+  TEST_ASSERT_EQUAL(-1, node1.balance);
+  TEST_ASSERT_EQUAL(0, node2.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node1, root);
+  TEST_ASSERT_EQUAL_PTR(&node2, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
+}
+
+/**
+ *    (100)                  (100)
+ *    /   \        =>        /   \
+ *  (50) (150)            (50)   (150)
+ *                        /  
+ *                     (25) 
+ *
+ */
+void test_avlAdd_given_25_should_change_node1_balance_factor(){
+	Node node4 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = NULL;
+  
+  root = avlAdd(root, &node1);
+  root = avlAdd(root, &node2);
+  root = avlAdd(root, &node3);
+  root = avlAdd(root, &node4);
+  
+  TEST_ASSERT_EQUAL(-1, node1.balance);
+  TEST_ASSERT_EQUAL(-1, node2.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node1, root);
+  TEST_ASSERT_EQUAL_PTR(&node2, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
+}
+
+/**
+ *    (100)                  (100)
+ *    /   \        =>        /   \
+ *  (50) (150)            (50)   (150)
+ *                           \  
+ *                          (75) 
+ *
+ */
+void test_avlAdd_given_75_should_change_node1_balance_factor(){
+	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = NULL;
+  
+  root = avlAdd(root, &node1);
+  root = avlAdd(root, &node2);
+  root = avlAdd(root, &node3);
+  root = avlAdd(root, &node4);
+  
+  TEST_ASSERT_EQUAL(-1, node1.balance);
+  TEST_ASSERT_EQUAL(1, node2.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node1, root);
+  TEST_ASSERT_EQUAL_PTR(&node2, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
+}
+
+/**
+ *    (200)            (150)
+ *    /         =>     /   \
+ *  (150)            (100)  (200)
+ *  /           
+ *(100)      
+ *
+ */
+void test_avlAdd_given_200_150_100(){
+	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = NULL;
+  
+  root = avlAdd(root, &node1);
+  root = avlAdd(root, &node2);
+  root = avlAdd(root, &node3);
+  
+  TEST_ASSERT_EQUAL(0, node1.balance);
+  TEST_ASSERT_EQUAL(0, node2.balance);
+  TEST_ASSERT_EQUAL(0, node3.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node2, root);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node1, root->rightChild);
+}
+
+/**
+ *       (150)                      (100)
+ *       /   \                      /   \
+ *    (100)  (200)               (75)  (150)
+ *    /   \             =>       /     /   \
+ *  (75)  (125)                (25)  (125) (200)
+ *  /
+ *(25)
+ *
+ */
+void test_avlAdd_given_200_150_100_75_125_25(){
+	Node node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = NULL;
+  
+  root = avlAdd(root, &node1);
+  root = avlAdd(root, &node2);
+  root = avlAdd(root, &node3);
+  root = avlAdd(root, &node4);
+  root = avlAdd(root, &node5);
+  root = avlAdd(root, &node6);
+  
+  TEST_ASSERT_EQUAL(0, node1.balance);
+  TEST_ASSERT_EQUAL(0, node2.balance);
+  TEST_ASSERT_EQUAL(0, node3.balance);
+  TEST_ASSERT_EQUAL(-1, node4.balance);
+  TEST_ASSERT_EQUAL(0, node5.balance);
+  TEST_ASSERT_EQUAL(0, node6.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node3, root);
+  TEST_ASSERT_EQUAL_PTR(&node4, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node2, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node5, node2.leftChild);
+}
+
+/**
+ *      (100)                        (100)
+ *      /   \                       /     \
+ *    (75)  (150)         =>     (75)     (150)   
+ *    /     /   \                /  \     /  \ 
+ *  (25)  (125) (200)         (25)  (90)(125)(200)
+ *
+ *
+ *
+ */
+void test_avlAdd_given_200_150_100_75_125_25_90(){
+	Node node7 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = NULL;
+  
+  root = avlAdd(root, &node1);
+  root = avlAdd(root, &node2);
+  root = avlAdd(root, &node3);
+  root = avlAdd(root, &node4);
+  root = avlAdd(root, &node5);
+  root = avlAdd(root, &node6);
+  root = avlAdd(root, &node7);
+  
+  TEST_ASSERT_EQUAL(0, node1.balance);
+  TEST_ASSERT_EQUAL(0, node2.balance);
+  TEST_ASSERT_EQUAL(0, node3.balance);
+  TEST_ASSERT_EQUAL(0, node4.balance);
+  TEST_ASSERT_EQUAL(0, node5.balance);
+  TEST_ASSERT_EQUAL(0, node6.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node3, root);
+  TEST_ASSERT_EQUAL_PTR(&node4, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node2, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node5, node2.leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node7, node4.rightChild);
+}
+
+/**
+ *          (100)                           (90)
+ *         /     \                       /        \
+ *      (75)     (150)      =>        (75)       (100)
+ *      /  \      /  \                /  \        /  \
+ *    (25) (90)(125)(200)          (25)  (80)  (95) (150)
+ *    /    /  \                    /        \        /  \
+ *  (10) (80) (95)               (10)      (85)   (125)(200)
+ *         \
+ *        (85)
+ */
+void test_avlAdd_given_200_150_100_75_125_25_90_80_95_10_85(){
+	Node node11 = {.data = 85, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node10 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node9 = {.data = 95, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node8 = {.data = 80, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node7 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = NULL;
+  
+  root = avlAdd(root, &node1);
+  root = avlAdd(root, &node2);
+  root = avlAdd(root, &node3);
+  root = avlAdd(root, &node4);
+  root = avlAdd(root, &node5);
+  root = avlAdd(root, &node6);
+  root = avlAdd(root, &node7);
+  root = avlAdd(root, &node8);
+  root = avlAdd(root, &node9);
+  root = avlAdd(root, &node10);
+  root = avlAdd(root, &node11);
+  
+  TEST_ASSERT_EQUAL(1, node3.balance);
+  TEST_ASSERT_EQUAL(0, node4.balance);
+  TEST_ASSERT_EQUAL(0, node7.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node7, root);
+  TEST_ASSERT_EQUAL_PTR(&node4, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node9, node3.leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node8, node4.rightChild);
+}
+
+/**
+ *          (100)                           (90)
+ *         /     \                       /        \
+ *      (75)     (150)      =>        (75)       (100)
+ *      /  \      /  \                /  \       /    \
+ *    (25) (90)(125)(200)          (25)  (80)  (95)   (150)
+ *    /    /  \                    /              \    /  \
+ *  (10) (80) (95)               (10)            (97)(125)(200)
+ *               \
+ *               (97)
+ */
+void test_avlAdd_given_200_150_100_75_125_25_90_80_95_10_97(){
+	Node node11 = {.data = 97, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node10 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node9 = {.data = 95, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node8 = {.data = 80, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node7 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	Node node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  Node *root = NULL;
+  
+  root = avlAdd(root, &node1);
+  root = avlAdd(root, &node2);
+  root = avlAdd(root, &node3);
+  root = avlAdd(root, &node4);
+  root = avlAdd(root, &node5);
+  root = avlAdd(root, &node6);
+  root = avlAdd(root, &node7);
+  root = avlAdd(root, &node8);
+  root = avlAdd(root, &node9);
+  root = avlAdd(root, &node10);
+  root = avlAdd(root, &node11);
+  
+  TEST_ASSERT_EQUAL(0, node3.balance);
+  TEST_ASSERT_EQUAL(-1, node4.balance);
+  TEST_ASSERT_EQUAL(0, node7.balance);
+  
+  TEST_ASSERT_EQUAL_PTR(&node7, root);
+  TEST_ASSERT_EQUAL_PTR(&node4, root->leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node9, node3.leftChild);
+  TEST_ASSERT_EQUAL_PTR(&node8, node4.rightChild);
+  TEST_ASSERT_EQUAL_PTR(&node11, node9.rightChild);
 }
 
 /////////////////////////////////////////////////

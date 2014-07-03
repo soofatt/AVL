@@ -8,29 +8,33 @@ Node *avlAdd(Node *root, Node *nodeToAdd){
   
   if(root == NULL)
     root = nodeToAdd;
+    
   else if(nodeToAdd->data < root->data){
     if(root->leftChild != NULL){
-	  tempBalanceLeft = (root->leftChild->balance);
+      tempBalanceLeft = (root->leftChild->balance);
       avlAdd(root->leftChild, nodeToAdd);
       if(tempBalanceLeft - (root->leftChild->balance) == 0){}
       else if((root->leftChild->balance) - 0 != 0)
         root->balance--;
-	  else{}
+      else{}
     }
+    
     else{
       root->leftChild = nodeToAdd;
       root->balance--;
     }
   }
+  
   else if(nodeToAdd->data > root->data){
     if(root->rightChild != NULL){
-	  tempBalanceRight = (root->rightChild->balance);
+      tempBalanceRight = (root->rightChild->balance);
       avlAdd(root->rightChild, nodeToAdd);
       if(tempBalanceRight - (root->rightChild->balance) == 0){}
       else if((root->rightChild->balance) - 0 != 0)
         root->balance++;
       else{}
     }
+    
     else{
       root->rightChild = nodeToAdd;
       root->balance++;
