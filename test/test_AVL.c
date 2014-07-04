@@ -1,6 +1,7 @@
 #include "unity.h"
 #include "CException.h"
 #include "AVL.h"
+#include "AVLInt.h"
 #include "Rotation.h"
 #include "mock_Rotation_r.h"
 
@@ -18,20 +19,20 @@ void tearDown(void){}
  *
  *
  */
-void test_avlAddInt_given_150_should_print_error_because_already_in_tree(){
+void test_avlAddInt_given_150_should_throw_error_because_already_in_tree(){
 	CEXCEPTION_T e;
   
-  Node node4 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+  NodeInt node4 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
   Try{
-    root = avlAddInt(root, &node1);
-    root = avlAddInt(root, &node2);
-    root = avlAddInt(root, &node3);
-    root = avlAddInt(root, &node4);
+    root = (NodeInt *)avlAddInt(root, &node1);
+    root = (NodeInt *)avlAddInt(root, &node2);
+    root = (NodeInt *)avlAddInt(root, &node3);
+    root = (NodeInt *)avlAddInt(root, &node4);
   }Catch(e){
     TEST_ASSERT_EQUAL(ERR_ALREADY_IN_TREE, e);
   }
@@ -50,12 +51,12 @@ void test_avlAddInt_given_150_should_print_error_because_already_in_tree(){
  *
  */
 void test_avlAddInt_given_160_should_change_node1_balance_factor(){
-	Node node2 = {.data = 160, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node2 = {.data = 160, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -71,18 +72,18 @@ void test_avlAddInt_given_160_should_change_node1_balance_factor(){
  *    (120)                 (120)  (200)
  */
 void test_avlAddInt_given_200_should_not_change_node1_balance_factor(){
-	Node node5 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node4 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node5 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node4 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -101,18 +102,18 @@ void test_avlAddInt_given_200_should_not_change_node1_balance_factor(){
  *          (200)          (120)  (200)
  */
 void test_avlAddInt_given_120_should_not_change_node1_balance_factor(){
-	Node node5 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node4 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node5 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node4 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -131,16 +132,16 @@ void test_avlAddInt_given_120_should_not_change_node1_balance_factor(){
  *                               (200) 
  */
 void test_avlAddInt_given_200_should_change_node1_balance_factor(){
-	Node node4 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node4 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -158,16 +159,16 @@ void test_avlAddInt_given_200_should_change_node1_balance_factor(){
  *                          (120) 
  */
 void test_avlAddInt_given_120_should_change_node1_balance_factor(){
-	Node node4 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node4 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -187,14 +188,14 @@ void test_avlAddInt_given_120_should_change_node1_balance_factor(){
  * 
  */
 void test_avlAddInt_should_add_1_50_100(){
-  Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+  NodeInt node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
   
   TEST_ASSERT_EQUAL_PTR(&node2, root);
   TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
@@ -212,20 +213,20 @@ void test_avlAddInt_should_add_1_50_100(){
  *
  */
 void test_avlAddInt_should_add_1_50_100_75_150_200(){
-  Node node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node5 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+  NodeInt node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node5 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
-  root = avlAddInt(root, &node6);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node6);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -250,22 +251,22 @@ void test_avlAddInt_should_add_1_50_100_75_150_200(){
  *
  */
 void test_avlAddInt_should_add_1_50_100_75_150_200_120(){
-  Node node7 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node5 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+  NodeInt node7 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node5 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
-  root = avlAddInt(root, &node6);
-  root = avlAddInt(root, &node7);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node6);
+  root = (NodeInt *)avlAddInt(root, &node7);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -294,30 +295,30 @@ void test_avlAddInt_should_add_1_50_100_75_150_200_120(){
  *                                       (140)
  */
 void test_avlAddInt_should_add_1_50_100_75_150_200_120_110_130_250_140(){
-  Node node11 = {.data = 140, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node10 = {.data = 250, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node9 = {.data = 130, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node8 = {.data = 110, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node7 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node5 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+  NodeInt node11 = {.data = 140, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node10 = {.data = 250, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node9 = {.data = 130, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node8 = {.data = 110, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node7 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node5 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
-  root = avlAddInt(root, &node6);
-  root = avlAddInt(root, &node7);
-  root = avlAddInt(root, &node8);
-  root = avlAddInt(root, &node9);
-  root = avlAddInt(root, &node10);
-  root = avlAddInt(root, &node11);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node6);
+  root = (NodeInt *)avlAddInt(root, &node7);
+  root = (NodeInt *)avlAddInt(root, &node8);
+  root = (NodeInt *)avlAddInt(root, &node9);
+  root = (NodeInt *)avlAddInt(root, &node10);
+  root = (NodeInt *)avlAddInt(root, &node11);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -351,30 +352,30 @@ void test_avlAddInt_should_add_1_50_100_75_150_200_120_110_130_250_140(){
  *                            (105)
  */
 void test_avlAddInt_should_add_1_50_100_75_150_200_120_110_130_250_105(){
-  Node node11 = {.data = 105, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node10 = {.data = 250, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node9 = {.data = 130, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node8 = {.data = 110, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node7 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node5 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+  NodeInt node11 = {.data = 105, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node10 = {.data = 250, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node9 = {.data = 130, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node8 = {.data = 110, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node7 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node5 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
-  root = avlAddInt(root, &node6);
-  root = avlAddInt(root, &node7);
-  root = avlAddInt(root, &node8);
-  root = avlAddInt(root, &node9);
-  root = avlAddInt(root, &node10);
-  root = avlAddInt(root, &node11);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node6);
+  root = (NodeInt *)avlAddInt(root, &node7);
+  root = (NodeInt *)avlAddInt(root, &node8);
+  root = (NodeInt *)avlAddInt(root, &node9);
+  root = (NodeInt *)avlAddInt(root, &node10);
+  root = (NodeInt *)avlAddInt(root, &node11);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -405,12 +406,12 @@ void test_avlAddInt_should_add_1_50_100_75_150_200_120_110_130_250_105(){
  *
  */
 void test_avlAddInt_given_80_should_change_node1_balance_factor(){
-	Node node2 = {.data = 80, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node2 = {.data = 80, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -427,18 +428,18 @@ void test_avlAddInt_given_80_should_change_node1_balance_factor(){
  *
  */
 void test_avlAddInt_given_75_should_not_change_node1_balance_factor(){
-	Node node5 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node4 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node5 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node4 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -457,18 +458,18 @@ void test_avlAddInt_given_75_should_not_change_node1_balance_factor(){
  *
  */
 void test_avlAddInt_given_25_should_not_change_node1_balance_factor(){
-	Node node5 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node5 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -487,16 +488,16 @@ void test_avlAddInt_given_25_should_not_change_node1_balance_factor(){
  *
  */
 void test_avlAddInt_given_25_should_change_node1_balance_factor(){
-	Node node4 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node4 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(-1, node2.balance);
@@ -515,16 +516,16 @@ void test_avlAddInt_given_25_should_change_node1_balance_factor(){
  *
  */
 void test_avlAddInt_given_75_should_change_node1_balance_factor(){
-	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node2 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(1, node2.balance);
@@ -543,14 +544,14 @@ void test_avlAddInt_given_75_should_change_node1_balance_factor(){
  *
  */
 void test_avlAddInt_given_200_150_100(){
-	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -572,20 +573,20 @@ void test_avlAddInt_given_200_150_100(){
  *
  */
 void test_avlAddInt_given_200_150_100_75_125_25(){
-	Node node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
-  root = avlAddInt(root, &node6);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node6);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -611,22 +612,22 @@ void test_avlAddInt_given_200_150_100_75_125_25(){
  *
  */
 void test_avlAddInt_given_200_150_100_75_125_25_90(){
-	Node node7 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node7 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
-  root = avlAddInt(root, &node6);
-  root = avlAddInt(root, &node7);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node6);
+  root = (NodeInt *)avlAddInt(root, &node7);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -654,30 +655,30 @@ void test_avlAddInt_given_200_150_100_75_125_25_90(){
  *        (85)
  */
 void test_avlAddInt_given_200_150_100_75_125_25_90_80_95_10_85(){
-	Node node11 = {.data = 85, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node10 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node9 = {.data = 95, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node8 = {.data = 80, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node7 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node11 = {.data = 85, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node10 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node9 = {.data = 95, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node8 = {.data = 80, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node7 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
-  root = avlAddInt(root, &node6);
-  root = avlAddInt(root, &node7);
-  root = avlAddInt(root, &node8);
-  root = avlAddInt(root, &node9);
-  root = avlAddInt(root, &node10);
-  root = avlAddInt(root, &node11);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node6);
+  root = (NodeInt *)avlAddInt(root, &node7);
+  root = (NodeInt *)avlAddInt(root, &node8);
+  root = (NodeInt *)avlAddInt(root, &node9);
+  root = (NodeInt *)avlAddInt(root, &node10);
+  root = (NodeInt *)avlAddInt(root, &node11);
   
   TEST_ASSERT_EQUAL(1, node3.balance);
   TEST_ASSERT_EQUAL(0, node4.balance);
@@ -702,30 +703,30 @@ void test_avlAddInt_given_200_150_100_75_125_25_90_80_95_10_85(){
  *               (97)
  */
 void test_avlAddInt_given_200_150_100_75_125_25_90_80_95_10_97(){
-	Node node11 = {.data = 97, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node10 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node9 = {.data = 95, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node8 = {.data = 80, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node7 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = NULL;
+	NodeInt node11 = {.data = 97, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node10 = {.data = 10, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node9 = {.data = 95, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node8 = {.data = 80, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node7 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node6 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node5 = {.data = 125, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node4 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 100, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node2 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt node1 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = NULL;
   
-  root = avlAddInt(root, &node1);
-  root = avlAddInt(root, &node2);
-  root = avlAddInt(root, &node3);
-  root = avlAddInt(root, &node4);
-  root = avlAddInt(root, &node5);
-  root = avlAddInt(root, &node6);
-  root = avlAddInt(root, &node7);
-  root = avlAddInt(root, &node8);
-  root = avlAddInt(root, &node9);
-  root = avlAddInt(root, &node10);
-  root = avlAddInt(root, &node11);
+  root = (NodeInt *)avlAddInt(root, &node1);
+  root = (NodeInt *)avlAddInt(root, &node2);
+  root = (NodeInt *)avlAddInt(root, &node3);
+  root = (NodeInt *)avlAddInt(root, &node4);
+  root = (NodeInt *)avlAddInt(root, &node5);
+  root = (NodeInt *)avlAddInt(root, &node6);
+  root = (NodeInt *)avlAddInt(root, &node7);
+  root = (NodeInt *)avlAddInt(root, &node8);
+  root = (NodeInt *)avlAddInt(root, &node9);
+  root = (NodeInt *)avlAddInt(root, &node10);
+  root = (NodeInt *)avlAddInt(root, &node11);
   
   TEST_ASSERT_EQUAL(0, node3.balance);
   TEST_ASSERT_EQUAL(-1, node4.balance);
@@ -740,7 +741,7 @@ void test_avlAddInt_given_200_150_100_75_125_25_90_80_95_10_97(){
 }
 
 /////////////////////////////////////////////////
-// Test avlRemove
+// Test avlRemoveInt
 /////////////////////////////////////////////////
 /**
  *     (50)    =>    NULL
@@ -749,13 +750,13 @@ void test_avlAddInt_given_200_150_100_75_125_25_90_80_95_10_97(){
  *
  *
  */
-void test_avlRemove_should_remove_50_and_return_NULL(){
-	Node node1 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node nodeRemove = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = &node1;
-  Node *result;
+void test_avlRemoveInt_should_remove_50_and_return_NULL(){
+	NodeInt node1 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt nodeRemove = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = &node1;
+  NodeInt *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = (NodeInt *)avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL_PTR(&node1, result);
   TEST_ASSERT_EQUAL_PTR(NULL, root);
@@ -768,16 +769,16 @@ void test_avlRemove_should_remove_50_and_return_NULL(){
  *           \             \
  *          (200)         (200)
  */
-void test_avlRemove_should_attempt_to_remove_1_but_will_return_NULL(){
-	Node node4 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node3 = {.data = 150, .balance = 1, .leftChild = NULL, .rightChild = &node4};
-	Node node2 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-	Node node1 = {.data = 50, .balance = 1, .leftChild = &node2, .rightChild = &node3};
-  Node nodeRemove = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
-  Node *root = &node1;
-  Node *result;
+void test_avlRemoveInt_should_attempt_to_remove_1_but_will_return_NULL(){
+	NodeInt node4 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node3 = {.data = 150, .balance = 1, .leftChild = NULL, .rightChild = &node4};
+	NodeInt node2 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+	NodeInt node1 = {.data = 50, .balance = 1, .leftChild = &node2, .rightChild = &node3};
+  NodeInt nodeRemove = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
+  NodeInt *root = &node1;
+  NodeInt *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = (NodeInt *)avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -795,7 +796,7 @@ void test_avlRemove_should_attempt_to_remove_1_but_will_return_NULL(){
  *  
  *          
  */
-void test_avlRemove_should_remove_25_in_the_left_subtree_case1(){
+void test_avlRemoveInt_should_remove_25_in_the_left_subtree_case1(){
 	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node2 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node1 = {.data = 50, .balance = 0, .leftChild = &node2, .rightChild = &node3};
@@ -803,7 +804,7 @@ void test_avlRemove_should_remove_25_in_the_left_subtree_case1(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(1, root->balance);
   
@@ -818,7 +819,7 @@ void test_avlRemove_should_remove_25_in_the_left_subtree_case1(){
  *            \              \
  *           (200)          (200)
  */
-void test_avlRemove_should_remove_25_in_the_left_subtree_case2_and_should_leftRotate(){
+void test_avlRemoveInt_should_remove_25_in_the_left_subtree_case2_and_should_leftRotate(){
 	Node node4 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node3 = {.data = 150, .balance = 1, .leftChild = NULL, .rightChild = &node4};
 	Node node2 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
@@ -827,7 +828,7 @@ void test_avlRemove_should_remove_25_in_the_left_subtree_case2_and_should_leftRo
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node3.balance);
@@ -846,7 +847,7 @@ void test_avlRemove_should_remove_25_in_the_left_subtree_case2_and_should_leftRo
  *    /       \              \
  *  (1)       (200)          (200)
  */
-void test_avlRemove_should_remove_25_in_the_left_subtree_case3(){
+void test_avlRemoveInt_should_remove_25_in_the_left_subtree_case3(){
 	Node node5 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node4 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node3 = {.data = 150, .balance = 1, .leftChild = NULL, .rightChild = &node5};
@@ -856,7 +857,7 @@ void test_avlRemove_should_remove_25_in_the_left_subtree_case3(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(1, node3.balance);
@@ -879,7 +880,7 @@ void test_avlRemove_should_remove_25_in_the_left_subtree_case3(){
  *     (120) (175)
  *
  */
-void test_avlRemove_should_remove_1_in_the_left_subtree_case1_should_doubleLeftRotate(){
+void test_avlRemoveInt_should_remove_1_in_the_left_subtree_case1_should_doubleLeftRotate(){
 	Node node8 = {.data = 175, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node7 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 220, .balance = 0, .leftChild = NULL, .rightChild = NULL};
@@ -892,7 +893,7 @@ void test_avlRemove_should_remove_1_in_the_left_subtree_case1_should_doubleLeftR
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -917,7 +918,7 @@ void test_avlRemove_should_remove_1_in_the_left_subtree_case1_should_doubleLeftR
  *     (120) 
  *
  */
-void test_avlRemove_should_remove_1_in_the_left_subtree_case2_should_doubleLeftRotate(){
+void test_avlRemoveInt_should_remove_1_in_the_left_subtree_case2_should_doubleLeftRotate(){
 	Node node7 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 220, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node5 = {.data = 150, .balance = -1, .leftChild = &node7, .rightChild = NULL};
@@ -929,7 +930,7 @@ void test_avlRemove_should_remove_1_in_the_left_subtree_case2_should_doubleLeftR
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -954,7 +955,7 @@ void test_avlRemove_should_remove_1_in_the_left_subtree_case2_should_doubleLeftR
  *           (175)
  *
  */
-void test_avlRemove_should_remove_1_in_the_left_subtree_case3_should_doubleLeftRotate(){
+void test_avlRemoveInt_should_remove_1_in_the_left_subtree_case3_should_doubleLeftRotate(){
 	Node node7 = {.data = 175, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 220, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node5 = {.data = 150, .balance = 1, .leftChild = NULL, .rightChild = &node7};
@@ -966,7 +967,7 @@ void test_avlRemove_should_remove_1_in_the_left_subtree_case3_should_doubleLeftR
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -991,7 +992,7 @@ void test_avlRemove_should_remove_1_in_the_left_subtree_case3_should_doubleLeftR
  *           (175) (250)          (175)
  *
  */
-void test_avlRemove_should_remove_1_in_the_left_subtree_case4_should_doubleLeftRotate(){
+void test_avlRemoveInt_should_remove_1_in_the_left_subtree_case4_should_doubleLeftRotate(){
 	Node node8 = {.data = 250, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node7 = {.data = 175, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 220, .balance = 1, .leftChild = NULL, .rightChild = &node8};
@@ -1004,7 +1005,7 @@ void test_avlRemove_should_remove_1_in_the_left_subtree_case4_should_doubleLeftR
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -1026,7 +1027,7 @@ void test_avlRemove_should_remove_1_in_the_left_subtree_case4_should_doubleLeftR
  *     \             
  *    (40)           
  */
-void test_avlRemove_should_remove_25_in_the_left_subtree_case4(){
+void test_avlRemoveInt_should_remove_25_in_the_left_subtree_case4(){
 	Node node4 = {.data = 40, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node3 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node2 = {.data = 25, .balance = 1, .leftChild = NULL, .rightChild = &node4};
@@ -1035,7 +1036,7 @@ void test_avlRemove_should_remove_25_in_the_left_subtree_case4(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   
@@ -1053,7 +1054,7 @@ void test_avlRemove_should_remove_25_in_the_left_subtree_case4(){
  *(1) (40)            (40)
  *
  */
-void test_avlRemove_should_remove_25_in_the_left_subtree_case5(){
+void test_avlRemoveInt_should_remove_25_in_the_left_subtree_case5(){
 	Node node5 = {.data = 40, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node4 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node3 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
@@ -1063,7 +1064,7 @@ void test_avlRemove_should_remove_25_in_the_left_subtree_case5(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(1, node4.balance);
@@ -1086,7 +1087,7 @@ void test_avlRemove_should_remove_25_in_the_left_subtree_case5(){
  *
  *
  */
-void test_avlRemove_should_remove_150_at_root_case1(){
+void test_avlRemoveInt_should_remove_150_at_root_case1(){
 	Node node7 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 250, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node5 = {.data = 40, .balance = 1, .leftChild = NULL, .rightChild = &node7};
@@ -1098,7 +1099,7 @@ void test_avlRemove_should_remove_150_at_root_case1(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node7.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -1120,7 +1121,7 @@ void test_avlRemove_should_remove_150_at_root_case1(){
  *
  *
  */
-void test_avlRemove_should_remove_150_at_root_case2(){
+void test_avlRemoveInt_should_remove_150_at_root_case2(){
 	Node node8 = {.data = 90, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node7 = {.data = 40, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 250, .balance = 0, .leftChild = NULL, .rightChild = NULL};
@@ -1133,7 +1134,7 @@ void test_avlRemove_should_remove_150_at_root_case2(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(-1, node8.balance);
   TEST_ASSERT_EQUAL(1, node2.balance);
@@ -1153,7 +1154,7 @@ void test_avlRemove_should_remove_150_at_root_case2(){
  * (1)                (1)
  *
  */
-void test_avlRemove_should_attempt_to_remove_200_but_will_return_NULL(){
+void test_avlRemoveInt_should_attempt_to_remove_200_but_will_return_NULL(){
 	Node node4 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node2 = {.data = 25, .balance = -1, .leftChild = &node4, .rightChild = NULL};
@@ -1162,7 +1163,7 @@ void test_avlRemove_should_attempt_to_remove_200_but_will_return_NULL(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(-1, node2.balance);
@@ -1181,7 +1182,7 @@ void test_avlRemove_should_attempt_to_remove_200_but_will_return_NULL(){
  *   (25)(150)          (25)
  *
  */
-void test_avlRemove_should_remove_150_in_the_right_subtree_case1(){
+void test_avlRemoveInt_should_remove_150_in_the_right_subtree_case1(){
 	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node2 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
   Node node1 = {.data = 50, .balance = 0, .leftChild = &node2, .rightChild = &node3};
@@ -1189,7 +1190,7 @@ void test_avlRemove_should_remove_150_in_the_right_subtree_case1(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -1208,7 +1209,7 @@ void test_avlRemove_should_remove_150_in_the_right_subtree_case1(){
  * (1)                (1)
  *
  */
-void test_avlRemove_should_remove_150_in_the_right_subtree_case2_should_right_rotate(){
+void test_avlRemoveInt_should_remove_150_in_the_right_subtree_case2_should_right_rotate(){
 	Node node4 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node3 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node2 = {.data = 25, .balance = -1, .leftChild = &node4, .rightChild = NULL};
@@ -1217,7 +1218,7 @@ void test_avlRemove_should_remove_150_in_the_right_subtree_case2_should_right_ro
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -1238,7 +1239,7 @@ void test_avlRemove_should_remove_150_in_the_right_subtree_case2_should_right_ro
  * (1)      (200)     (1)
  *
  */
-void test_avlRemove_should_remove_150_in_the_right_subtree_case3(){
+void test_avlRemoveInt_should_remove_150_in_the_right_subtree_case3(){
 	Node node5 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node4 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node3 = {.data = 150, .balance = 1, .leftChild = NULL, .rightChild = &node5};
@@ -1248,7 +1249,7 @@ void test_avlRemove_should_remove_150_in_the_right_subtree_case3(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(-1, node2.balance);
@@ -1271,7 +1272,7 @@ void test_avlRemove_should_remove_150_in_the_right_subtree_case3(){
  *    (40)(75)
  *
  */
-void test_avlRemove_should_remove_200_in_the_right_subtree_case1_should_double_right_rotate(){
+void test_avlRemoveInt_should_remove_200_in_the_right_subtree_case1_should_double_right_rotate(){
 	Node node8 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node7 = {.data = 40, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
@@ -1284,7 +1285,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case1_should_double_r
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -1313,7 +1314,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case1_should_double_r
  *        (75)
  *
  */
-void test_avlRemove_should_remove_200_in_the_right_subtree_case2_should_double_right_rotate(){
+void test_avlRemoveInt_should_remove_200_in_the_right_subtree_case2_should_double_right_rotate(){
 	Node node7 = {.data = 75, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node5 = {.data = 50, .balance = 1, .leftChild = NULL, .rightChild = &node7};
@@ -1325,7 +1326,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case2_should_double_r
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(-1, node2.balance);
@@ -1353,7 +1354,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case2_should_double_r
  *    (40)
  *
  */
-void test_avlRemove_should_remove_200_in_the_right_subtree_case3_should_double_right_rotate(){
+void test_avlRemoveInt_should_remove_200_in_the_right_subtree_case3_should_double_right_rotate(){
 	Node node7 = {.data = 40, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node5 = {.data = 50, .balance = -1, .leftChild = &node7, .rightChild = NULL};
@@ -1365,7 +1366,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case3_should_double_r
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -1395,7 +1396,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case3_should_double_r
  *
  *
  */
-void test_avlRemove_should_remove_200_in_the_right_subtree_case4_should_right_rotate(){
+void test_avlRemoveInt_should_remove_200_in_the_right_subtree_case4_should_right_rotate(){
 	Node node8 = {.data = 50, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node7 = {.data = 1, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 200, .balance = 0, .leftChild = NULL, .rightChild = NULL};
@@ -1408,7 +1409,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case4_should_right_ro
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(-1, node1.balance);
   TEST_ASSERT_EQUAL(1, node2.balance);
@@ -1434,7 +1435,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case4_should_right_ro
  *     (150)              
  *
  */
-void test_avlRemove_should_remove_200_in_the_right_subtree_case5(){
+void test_avlRemoveInt_should_remove_200_in_the_right_subtree_case5(){
 	Node node4 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node3 = {.data = 200, .balance = -1, .leftChild = &node4, .rightChild = NULL};
 	Node node2 = {.data = 25, .balance = 0, .leftChild = NULL, .rightChild = NULL};
@@ -1443,7 +1444,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case5(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -1463,7 +1464,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case5(){
  *     (150)(220)              (220)
  *
  */
-void test_avlRemove_should_remove_200_in_the_right_subtree_case6(){
+void test_avlRemoveInt_should_remove_200_in_the_right_subtree_case6(){
 	Node node5 = {.data = 220, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node4 = {.data = 150, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node3 = {.data = 200, .balance = 0, .leftChild = &node4, .rightChild = &node5};
@@ -1473,7 +1474,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case6(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(0, node2.balance);
@@ -1497,7 +1498,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case6(){
  *      (175)
  *
  */
-void test_avlRemove_should_remove_200_in_the_right_subtree_case7(){
+void test_avlRemoveInt_should_remove_200_in_the_right_subtree_case7(){
 	Node node7 = {.data = 175, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 220, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node5 = {.data = 150, .balance = 1, .leftChild = NULL, .rightChild = &node7};
@@ -1509,7 +1510,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case7(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node1.balance);
   TEST_ASSERT_EQUAL(-1, node2.balance);
@@ -1536,7 +1537,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case7(){
  *   (120)(175)          (120)
  *
  */
-void test_avlRemove_should_remove_200_in_the_right_subtree_case8(){
+void test_avlRemoveInt_should_remove_200_in_the_right_subtree_case8(){
 	Node node8 = {.data = 175, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node7 = {.data = 120, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node6 = {.data = 220, .balance = 0, .leftChild = NULL, .rightChild = NULL};
@@ -1549,7 +1550,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case8(){
   Node *root = &node1;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(1, node1.balance);
   TEST_ASSERT_EQUAL(-1, node2.balance);
@@ -1583,7 +1584,7 @@ void test_avlRemove_should_remove_200_in_the_right_subtree_case8(){
  *
  *
  */
-void test_avlRemove_should_remove_400_in_the_right_subtree(){
+void test_avlRemoveInt_should_remove_400_in_the_right_subtree(){
 	Node node330 = {.data = 330, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node600 = {.data = 600, .balance = 0, .leftChild = NULL, .rightChild = NULL};
 	Node node350 = {.data = 350, .balance = -1, .leftChild = &node330, .rightChild = NULL};
@@ -1608,7 +1609,7 @@ void test_avlRemove_should_remove_400_in_the_right_subtree(){
   Node *root = &node175;
   Node *result;
   
-  result = avlRemove(&root, &nodeRemove);
+  result = avlRemoveInt(&root, &nodeRemove);
   
   TEST_ASSERT_EQUAL(0, node175.balance);
   TEST_ASSERT_EQUAL(0, node250.balance);

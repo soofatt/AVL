@@ -4,18 +4,6 @@
 #include "Rotation_r.h"
 #include <stdio.h>
 
-int compareInt(void *nodeInTree, void *nodeToCompare){
-  Node *node1 = (Node *)nodeInTree;
-  Node *node2 = (Node *)nodeToCompare;
-  
-  if(node1->data > node2->data)
-    return 1;
-  else if(node1->data < node2->data)
-    return -1;
-  else if(node1->data == node2->data)
-    return 0;
-}
-
 /**
  *Description : To add a node into the AVL tree
  *
@@ -100,13 +88,16 @@ Node *avlAdd(Node *root, Node *nodeToAdd, int (*compare)(void *, void *)){
  *Output : returnNode -> The node that is removed
  *
  */
-Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove){
+Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove, int (*compare)(void *, void *)){
   Node *returnNode = NULL;
   Node *tempNode;
   int tempBalanceLeft, tempBalanceRight, tempBalanceForReplacement;
+  int compareResult;
   
   if((*ptrToRoot) !=NULL){
-    if(nodeToRemove->data == (*ptrToRoot)->data){
+    compareResult = compareInt((*ptrToRoot), nodeToRemove);
+    
+    if(compareResult == 0){
       returnNode = (*ptrToRoot);
       tempNode = returnNode;
       
@@ -143,11 +134,11 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove){
       }
     }  
     
-    else if(nodeToRemove->data < (*ptrToRoot)->data){
+    else if(compareResult == 1){
       if((*ptrToRoot)->leftChild != NULL)
-        tempBalanceLeft = (*ptrToRoot)->leftChild->balance;
+        tempBalanceLeft = (*ptrToRoot )->leftChild->balance;
         
-      returnNode = avlRemove(&(*ptrToRoot)->leftChild, nodeToRemove);
+      returnNode = avlRemove(&(*ptrToRoot)->leftChild, nodeToRemove, compare);
       
       if(returnNode == NULL)
         return returnNode;
@@ -164,11 +155,11 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove){
       else{}
     }
     
-    else if(nodeToRemove->data > (*ptrToRoot)->data){
+    else if(compareResult == -1){
       if((*ptrToRoot)->rightChild != NULL)
         tempBalanceRight = (*ptrToRoot)->rightChild->balance;
       
-      returnNode = avlRemove(&(*ptrToRoot)->rightChild, nodeToRemove);
+      returnNode = avlRemove(&(*ptrToRoot)->rightChild, nodeToRemove, compare);
       
       if(returnNode == NULL)
         return returnNode;
