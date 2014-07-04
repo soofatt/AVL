@@ -1,7 +1,20 @@
+#include "CException.h"
 #include "AVL.h"
 #include "Rotation.h"
 #include "Rotation_r.h"
 #include <stdio.h>
+
+int compareInt(void *nodeInTree, void *nodeToCompare){
+  Node *node1 = (Node *)nodeInTree;
+  Node *node2 = (Node *)nodeToCompare;
+  
+  if(node1->data > node2->data)
+    return 1;
+  else if(node1->data < node2->data)
+    return -1;
+  else if(node1->data == node2->data)
+    return 0;
+}
 
 /**
  *Description : To add a node into the AVL tree
@@ -12,44 +25,55 @@
  *Output : root -> The new root of the tree
  *
  */
-Node *avlAdd(Node *root, Node *nodeToAdd){
+Node *avlAdd(Node *root, Node *nodeToAdd, int (*compare)(void *, void *)){
   int tempBalanceLeft, tempBalanceRight;
+  int compareResult;
   
-  if(root == NULL)
+  if(nodeToAdd == NULL)
+    return root;
+  
+  if(root == NULL){
     root = nodeToAdd;
-    
-  else if(nodeToAdd->data < root->data){
-    if(root->leftChild != NULL){
-      tempBalanceLeft = (root->leftChild->balance);
-      avlAdd(root->leftChild, nodeToAdd);
-      if(tempBalanceLeft - (root->leftChild->balance) == 0){}
-      else if((root->leftChild->balance) - 0 != 0)
-        root->balance--;
-      else{}
-    }
-    
-    else{
-      root->leftChild = nodeToAdd;
-      root->balance--;
-    }
   }
   
-  else if(nodeToAdd->data > root->data){
-    if(root->rightChild != NULL){
-      tempBalanceRight = (root->rightChild->balance);
-      avlAdd(root->rightChild, nodeToAdd);
-      if(tempBalanceRight - (root->rightChild->balance) == 0){}
-      else if((root->rightChild->balance) - 0 != 0)
-        root->balance++;
-      else{}
+  else{  
+  compareResult = compare(root, nodeToAdd);
+    if(compareResult == 0)
+      Throw(ERR_ALREADY_IN_TREE);
+    
+    else if(compareResult == 1){
+      if(root->leftChild != NULL){
+        tempBalanceLeft = (root->leftChild->balance);
+        avlAdd(root->leftChild, nodeToAdd, compare);
+        if(tempBalanceLeft - (root->leftChild->balance) == 0){}
+        else if((root->leftChild->balance) - 0 != 0)
+          root->balance--;
+        else{}
+      }
+      
+      else{
+        root->leftChild = nodeToAdd;
+        root->balance--;
+      }
     }
     
-    else{
-      root->rightChild = nodeToAdd;
-      root->balance++;
+    else if(compareResult == -1){
+      if(root->rightChild != NULL){
+        tempBalanceRight = (root->rightChild->balance);
+        avlAdd(root->rightChild, nodeToAdd, compare);
+        if(tempBalanceRight - (root->rightChild->balance) == 0){}
+        else if((root->rightChild->balance) - 0 != 0)
+          root->balance++;
+        else{}
+      }
+      
+      else{
+        root->rightChild = nodeToAdd;
+        root->balance++;
+      }
     }
   }
-
+    
   if(root->balance == 2 && root->rightChild->balance == 1)
    root = leftRotate(root);
   else if(root->balance == 2 && root->rightChild->balance == 0)
